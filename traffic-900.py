@@ -11,6 +11,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
+DAY_RANGE = 120
+TIME = '09:00:00'
+
+
 # Importing the training set
 metro_traffic = pd.read_csv('Metro_Interstate_Traffic_Volume.csv')
 
@@ -28,7 +32,7 @@ metro_traffic['time'] = metro_traffic['time'].astype(str)
 metro_traffic['date'] = metro_traffic['date'].astype(str)
 
 # filtering only 9:00 oclock records
-dataset=metro_traffic[metro_traffic['time'] == '09:00:00']
+dataset=metro_traffic[metro_traffic['time'] == TIME]
 dataset = dataset.drop_duplicates(subset=['date'], keep='first', inplace=False)
 
 # divide the dataset into test and training dataset
@@ -48,8 +52,8 @@ training_set_scaled = sc.fit_transform(training_set)
 # Creating a data structure with 60 timesteps and 1 output
 X_train = []
 y_train = []
-for i in range(60, 1610):
-    X_train.append(training_set_scaled[i-60:i, 0])
+for i in range(DAY_RANGE, len(dataset_train)):
+    X_train.append(training_set_scaled[i-DAY_RANGE:i, 0])
     y_train.append(training_set_scaled[i, 0])
 X_train, y_train = np.array(X_train), np.array(y_train)
 
@@ -106,15 +110,15 @@ real_stock_price = dataset_test.iloc[:, 8:9].values
 
 # Getting the predicted stock price of 2017
 dataset_total = dataset.iloc[:, 8:9].values
-inputs = dataset_total[len(dataset_total) - len(dataset_test) - 60:]
+inputs = dataset_total[len(dataset_total) - len(dataset_test) - DAY_RANGE:]
 
 inputs = inputs.reshape(-1,1)
 inputs = sc.transform(inputs)
 
 X_test = []
 
-for i in range(60, 90):
-    X_test.append(inputs[i-60:i, 0])
+for i in range(DAY_RANGE, len(inputs)):
+    X_test.append(inputs[i-DAY_RANGE:i, 0])
     
 X_test = np.array(X_test)
 X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
@@ -124,11 +128,12 @@ predicted_stock_price = sc.inverse_transform(predicted_stock_price)
 # Visualising the results
 plt.plot(real_stock_price, color = 'red', label = 'Real traffic')
 plt.plot(predicted_stock_price, color = 'blue', label = 'Predicted traffic')
-plt.title('Google Stock Price Prediction')
-plt.xlabel('Time')
-plt.ylabel('Google Stock Price')
+plt.title('Traffic Prediction at ' + TIME + 'Considering last ' + str(DAY_RANGE) + ' days' ) 
+plt.xlabel('Date')
+plt.ylabel('Traffic')
 plt.legend()
 plt.show()
+
 
 
 
