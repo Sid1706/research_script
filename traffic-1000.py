@@ -3,7 +3,7 @@
 """
 Created on Wed Aug 14 19:16:24 2019
 
-@author: z063638
+@author: Amit Gupta
 """
 
 # Importing the libraries
@@ -11,7 +11,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-DAY_RANGE = 90
+DAY_RANGE = 7
+TIME = '10:00:00'
 # Importing the training set
 metro_traffic = pd.read_csv('Metro_Interstate_Traffic_Volume.csv')
 
@@ -29,7 +30,7 @@ metro_traffic['time'] = metro_traffic['time'].astype(str)
 metro_traffic['date'] = metro_traffic['date'].astype(str)
 
 # filtering only 9:00 oclock records
-dataset=metro_traffic[metro_traffic['time'] == '10:00:00']
+dataset=metro_traffic[metro_traffic['time'] == TIME]
 dataset = dataset.drop_duplicates(subset=['date'], keep='first', inplace=False)
 
 # divide the dataset into test and training dataset
@@ -114,11 +115,9 @@ predicted_stock_price = sc.inverse_transform(predicted_stock_price)
 # Visualising the results
 plt.plot(real_stock_price, color = 'red', label = 'Real traffic')
 plt.plot(predicted_stock_price, color = 'blue', label = 'Predicted traffic')
-plt.title('Google Stock Price Prediction')
-plt.xlabel('Time')
-plt.ylabel('Google Stock Price')
+plt.title('Traffic Prediction at ' + TIME)
+plt.xlabel('Date')
+plt.ylabel('Traffic')
 plt.legend()
 plt.show()
-
-
 
