@@ -125,7 +125,7 @@ predicted_stock_price = sc.inverse_transform(predicted_stock_price)
 # Visualising the results
 plt.plot(real_stock_price, color = 'red', label = 'Real traffic')
 plt.plot(predicted_stock_price, color = 'blue', label = 'Predicted traffic')
-plt.title('Traffic Prediction at ' + TIME + ' day range ' + str(DAY_RANGE) + ' Three regressor 60')
+plt.title('Traffic Prediction at ' + TIME + ' day range ' + str(DAY_RANGE) + ' Three regressor 90')
 plt.xlabel('Date')
 plt.ylabel('Traffic')
 plt.legend()
