@@ -76,17 +76,17 @@ from keras.layers import Dropout
 regressor = Sequential()
 
 # Adding the input layer and the LSTM layer
-regressor.add(LSTM(units = 60, return_sequences = True, input_shape = (None, 1)))
+regressor.add(LSTM(units = 90, return_sequences = True, input_shape = (None, 1)))
 regressor.add(Dropout(.1/2))
 # Adding a second LSTM layer
-#regressor.add(LSTM(units = 60, return_sequences = True))
+#regressor.add(LSTM(units = 90, return_sequences = True))
 
 # Adding a third LSTM layer
-regressor.add(LSTM(units = 60, return_sequences = True))
+regressor.add(LSTM(units = 90, return_sequences = True))
 regressor.add(Dropout(.1/2))
 
 # Adding a fourth LSTM layer
-regressor.add(LSTM(units = 60))
+regressor.add(LSTM(units = 90))
 regressor.add(Dropout(.1/2))
 
 # Adding the output layer
