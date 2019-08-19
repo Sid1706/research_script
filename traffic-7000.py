@@ -10,7 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-DAY_RANGE = 30
+DAY_RANGE = 15
 TIME = '07:00:00'
 # Importing the training set
 metro_traffic = pd.read_csv('Metro_Interstate_Traffic_Volume.csv')
@@ -75,33 +75,40 @@ regressor = Sequential()
 
 # Adding the input layer and the LSTM layer
 regressor.add(LSTM(units = 90, return_sequences = True, input_shape = (None, 1)))
-regressor.add(Dropout(.1))
+#regressor.add(Dropout(.1))
 # Adding a second LSTM layer
 #regressor.add(LSTM(units = 90, return_sequences = True))
 
 # Adding a third LSTM layer
 regressor.add(LSTM(units = 90, return_sequences = True))
-regressor.add(Dropout(.1))
+#regressor.add(Dropout(.1))
 
 regressor.add(LSTM(units = 90, return_sequences = True))
-regressor.add(Dropout(.1))
+#regressor.add(Dropout(.1))
+
+
+regressor.add(LSTM(units = 90, return_sequences = True))
+#regressor.add(Dropout(.1))
+
+#regressor.add(Dropout(.1))
+
 
 
 
 
 # Adding a fourth LSTM layer
-regressor.add(LSTM(units = 30))
-regressor.add(Dropout(.1))
+regressor.add(LSTM(units = 90))
+#regressor.add(Dropout(.1))
 
 # Adding the output layer
 regressor.add(Dense(units = 1))
-regressor.add(Dropout(.1))
+#regressor.add(Dropout(.1))
 
 # Compiling the RNN
 regressor.compile(optimizer = 'rmsprop', loss = 'mean_squared_error')
 
 # Fitting the RNN to the Training set
-regressor.fit(X_train, y_train, epochs = 500, batch_size = 64)
+regressor.fit(X_train, y_train, epochs = 100, batch_size = 8)
 
 
 # Part 3 - Making the predictions and visualising the results
